@@ -9,7 +9,11 @@ def methods():
 
 def clustering():
     print('''
-            
+
+    # train and test
+    X = x.to_numpy()
+    X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
+
     data["Clusters"] = kmeans.labels_
     print(data)
             
@@ -184,3 +188,52 @@ def preprocessing():
     sc = StandardScaler()
     x_train,x_test = [sc.fit_transform(x_train),sc.fit_transform(x_test)]
                  ''')
+def solved():
+    print('''
+    # k-mean
+
+from sklearn.datasets import make_blobs
+from sklearn_extra.cluster import KMedoids
+from sklearn.model_selection import train_test_split
+
+n_clusters = 3
+
+X = x.to_numpy()
+X_train, X_test = train_test_split(X, test_size=0.2, random_state=42)
+
+# Initialize K-Mean with the desired number of clusters
+kmeans = KMeans(5)
+# kmeans.fit(x)
+
+# Fit the model to the training data
+# kmeans.fit(X_train)
+
+# Get cluster labels for the training data
+train_cluster_labels = kmeans.fit(X_train).labels_
+# Get the mean points (centroid points)
+identified_clusters = kmeans.fit_predict(x)
+# identified_clusters
+centers = kmeans.cluster_centers_
+print(centers)
+
+# Visualize the clusters and centroid points for the training set
+plt.scatter(X_train[:, 0], X_train[:, 1], c=train_cluster_labels, cmap='gist_rainbow', label='Data Points')
+plt.scatter(centers[:, 0], centers[:, 1], c='black', marker='X', s=50, label='Centroid Points')
+plt.title('K-Mean Clustering with Centroid Points (Train Set)')
+plt.xlabel('Age')
+plt.ylabel('pregnancies')
+plt.legend()
+plt.show()
+
+# Predict cluster labels for the test set
+test_cluster_labels = kmeans.predict(X_test)
+
+# Visualize the clusters for the test set
+plt.scatter(X_test[:, 0], X_test[:, 1], c=test_cluster_labels, cmap='gist_rainbow', label='Test Data Points')
+plt.scatter(centers[:, 0], centers[:, 1], c='black', marker='X', s=50, label='Centroid Points')
+plt.title('K-Mean Clustering with Centroid Points (Test Set)')
+plt.xlabel('Age')
+plt.ylabel('pregnancies')
+plt.legend()
+plt.show()
+    ''')
